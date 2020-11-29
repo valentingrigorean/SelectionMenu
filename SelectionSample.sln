@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.808.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelectionSample.iOS", "src\SelectionSample.iOS.csproj\SelectionSample.iOS.csproj", "{F658DD0D-0E4E-4E4D-AAEF-02BE88D44DD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelectionSample.iOS", "src\SelectionSample.iOS\SelectionSample.iOS.csproj", "{F658DD0D-0E4E-4E4D-AAEF-02BE88D44DD2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelectionMenu.iOS", "src\SelectionMenu.iOS\SelectionMenu.iOS.csproj", "{6538E812-9801-4DC4-99F9-1A91DAA96296}"
 EndProject
