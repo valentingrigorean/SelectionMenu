@@ -27,7 +27,7 @@ namespace SelectionSample
 
         protected override void OnItemSelected(bool isSelected)
         {
-            CheckImage.Image = isSelected ? UIImage.CheckmarkImage : null;
+            CheckImage.Image = isSelected ? UIImage.FromBundle("ic_check") : null;
         }
     }
 }

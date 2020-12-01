@@ -11,7 +11,7 @@ namespace SelectionSample
 {
     public partial class SelectionViewController : UIViewController, ISelectionMenuDelegate<SampleItem>
     {
-        private SelectionMenuDataSource<SampleItem> _dataSource;
+        private ISelectionMenuDataSource<SampleItem> _dataSource;
 
         private TaskCompletionSource<SampleItem[]> _tcs;
 
@@ -60,12 +60,11 @@ namespace SelectionSample
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            _dataSource = new SelectionMenuDataSource<SampleItem>(TableView, this,
-                (tableView, item) =>
-                    (SelectionTableViewCell) tableView.DequeueReusableCell(nameof(SelectionTableViewCell)))
-            {
-                Items = _items
-            };
+
+            _dataSource = SelectionMenuDataSourceFactory.CreateDataSource(TableView, this, (tableView, item) =>
+                (SelectionTableViewCell) tableView.DequeueReusableCell(nameof(SelectionTableViewCell)));
+
+            _dataSource.Items = _items;
 
 
             TableView.DataSource = _dataSource;
