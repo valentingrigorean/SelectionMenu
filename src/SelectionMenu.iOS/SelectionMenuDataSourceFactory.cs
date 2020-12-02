@@ -151,7 +151,7 @@ namespace SelectionMenu.iOS
 
             private void SelectItemInternal(T item, bool isSelected)
             {
-                var wrapper = _selectionMenuItems.FirstOrDefault(i => _equalityComparerInternal.Equals(i, item));
+                var wrapper = _selectionMenuItems.FirstOrDefault(i => _equalityComparerInternal.Equals(i.Item, item));
                 if (wrapper == null)
                     return;
 

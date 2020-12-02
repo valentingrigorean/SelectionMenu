@@ -66,6 +66,7 @@ namespace SelectionSample
 
             _dataSource.Items = _items;
 
+            _dataSource.SelectItems(_items[0], _items[1]);
 
             TableView.DataSource = _dataSource;
             TableView.TableFooterView = new UIView();
