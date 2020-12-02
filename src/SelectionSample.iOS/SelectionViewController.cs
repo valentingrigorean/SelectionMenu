@@ -23,6 +23,7 @@ namespace SelectionSample
 
         public SelectionViewController(IntPtr handle) : base(handle)
         {
+            
         }
 
         public bool AllowMultipleSelection => _allowMultipleSelection;
@@ -45,7 +46,7 @@ namespace SelectionSample
             vc._allowMultipleSelection = allowMultipleSelection;
             vc._tcs = new TaskCompletionSource<SampleItem[]>();
             vc._items = items;
-            var nav = new UINavigationController(vc);
+            var nav = new UINavigationController(vc) {ModalPresentationStyle = UIModalPresentationStyle.FullScreen};
 
             if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
             {
@@ -59,6 +60,7 @@ namespace SelectionSample
 
         public override void ViewDidLoad()
         {
+
             base.ViewDidLoad();
 
             _dataSource = SelectionMenuDataSourceFactory.CreateDataSource(TableView, this, (tableView, item) =>
@@ -76,6 +78,7 @@ namespace SelectionSample
             searchController.ObscuresBackgroundDuringPresentation = false;
             searchController.SearchBar.Placeholder = "Search...";
             searchController.SearchBar.AutocapitalizationType = UITextAutocapitalizationType.None;
+            searchController.HidesNavigationBarDuringPresentation = false;
             searchController.SearchBar.TextChanged += (sender, args) =>
             {
                 if (args.SearchText.Length >= 2)
