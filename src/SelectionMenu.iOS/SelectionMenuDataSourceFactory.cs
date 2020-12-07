@@ -124,7 +124,7 @@ namespace SelectionMenu.iOS
             public void RowSelected(NSIndexPath indexPath)
             {
                 var item = _filterList[indexPath.Row];
-                NotifySelectedItem(item, !item.IsSelected);
+                SelectItemInternal(item,!item.IsSelected);
                 if (_selectionMenuDelegate.AllowMultipleSelection)
                     return;
                 var currentSelected =
@@ -154,8 +154,19 @@ namespace SelectionMenu.iOS
                 var wrapper = _selectionMenuItems.FirstOrDefault(i => _equalityComparerInternal.Equals(i.Item, item));
                 if (wrapper == null)
                     return;
+                SelectItemInternal(wrapper, isSelected);
+            }
 
-                NotifySelectedItem(wrapper, isSelected);
+            private void SelectItemInternal(SelectionMenuItem item, bool isSelected)
+            {
+                switch (isSelected)
+                {
+                    case true when !_selectionMenuDelegate.ShouldSelectItem((T) item.Item):
+                    case false when !_selectionMenuDelegate.ShouldUnselectItem((T) item.Item):
+                        return;
+                }
+
+                NotifySelectedItem(item, isSelected);
             }
 
             private void NotifySelectedItem(SelectionMenuItem selectionMenuItem, bool isSelected)

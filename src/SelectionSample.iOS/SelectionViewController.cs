@@ -23,11 +23,19 @@ namespace SelectionSample
 
         public SelectionViewController(IntPtr handle) : base(handle)
         {
-            
         }
 
         public bool AllowMultipleSelection => _allowMultipleSelection;
         public IEqualityComparer<SampleItem> EqualityComparer => SampleItemEqualityComparer.Instance;
+        public bool ShouldSelectItem(SampleItem item)
+        {
+            return item.Name.Contains("Jack");
+        }
+
+        public bool ShouldUnselectItem(SampleItem item)
+        {
+            return true;
+        }
 
         public void OnItemSelected(SampleItem item)
         {
@@ -36,7 +44,6 @@ namespace SelectionSample
         public void OnItemUnselected(SampleItem item)
         {
         }
-
 
         public static Task<SampleItem[]> GetSelectedItemsAsync(UIViewController viewController, SampleItem[] items,
             bool allowMultipleSelection)
@@ -60,7 +67,6 @@ namespace SelectionSample
 
         public override void ViewDidLoad()
         {
-
             base.ViewDidLoad();
 
             _dataSource = SelectionMenuDataSourceFactory.CreateDataSource(TableView, this, (tableView, item) =>
@@ -68,7 +74,7 @@ namespace SelectionSample
 
             _dataSource.Items = _items;
 
-            _dataSource.SelectItems(_items[0], _items[1]);
+            _dataSource.SelectItem(_items[0]);
 
             TableView.DataSource = _dataSource;
             TableView.TableFooterView = new UIView();
@@ -95,7 +101,7 @@ namespace SelectionSample
             DefinesPresentationContext = true;
 
 
-            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Close,
+            NavigationItem.LeftBarButtonItem = new UIBarButtonItem("Close", UIBarButtonItemStyle.Plain,
                 (sender, args) => SetResult(Array.Empty<SampleItem>()));
 
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Done,

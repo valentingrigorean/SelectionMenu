@@ -8,6 +8,10 @@ namespace SelectionMenu.iOS
 
         IEqualityComparer<T> EqualityComparer { get; }
 
+        bool ShouldSelectItem(T item);
+
+        bool ShouldUnselectItem(T item);
+
         void OnItemSelected(T item);
 
         void OnItemUnselected(T item);

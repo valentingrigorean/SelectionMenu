@@ -45,7 +45,6 @@
         <Compile Include="ISelectionMenuDataSource.cs" />
         <Compile Include="ISelectionMenuDelegate.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="SelectionMenuDataSource.cs" />
         <Compile Include="SelectionMenuDataSourceFactory.cs" />
         <Compile Include="SelectionMenuItem.cs" />
         <Compile Include="SelectionMenuTableViewCell.cs" />
