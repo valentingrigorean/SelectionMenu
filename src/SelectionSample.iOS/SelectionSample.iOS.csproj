@@ -137,10 +137,12 @@
         <Compile Include="SelectionTableViewCell.designer.cs">
           <DependentUpon>SelectionTableViewCell.cs</DependentUpon>
         </Compile>
+        <Compile Include="SelectionTableViewCell2.cs" />
         <Compile Include="SelectionViewController.cs" />
         <Compile Include="SelectionViewController.designer.cs">
           <DependentUpon>SelectionViewController.cs</DependentUpon>
         </Compile>
+        <Compile Include="SelectionViewController2.cs" />
         <Compile Include="ViewController.cs" />
         <Compile Include="ViewController.designer.cs">
             <DependentUpon>ViewController.cs</DependentUpon>

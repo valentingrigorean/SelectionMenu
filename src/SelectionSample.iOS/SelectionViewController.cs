@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Foundation;
 using SelectionMenu.iOS;
 using UIKit;
 
@@ -29,7 +28,7 @@ namespace SelectionSample
         public IEqualityComparer<SampleItem> EqualityComparer => SampleItemEqualityComparer.Instance;
         public bool ShouldSelectItem(SampleItem item)
         {
-            return item.Name.Contains("Jack");
+            return true;
         }
 
         public bool ShouldUnselectItem(SampleItem item)

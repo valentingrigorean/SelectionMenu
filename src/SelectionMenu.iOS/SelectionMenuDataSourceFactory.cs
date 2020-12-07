@@ -68,7 +68,7 @@ namespace SelectionMenu.iOS
 
             public void SelectItem(T item)
             {
-                SelectItemInternal(item, true);
+                SelectItemInternal(item, true, false);
             }
 
             public void SelectItems(params T[] items)
@@ -87,7 +87,7 @@ namespace SelectionMenu.iOS
 
             public void UnSelectItem(T item)
             {
-                SelectItemInternal(item, false);
+                SelectItemInternal(item, false, false);
             }
 
             public void UnSelectItems(params T[] items)
@@ -124,40 +124,47 @@ namespace SelectionMenu.iOS
             public void RowSelected(NSIndexPath indexPath)
             {
                 var item = _filterList[indexPath.Row];
-                SelectItemInternal(item,!item.IsSelected);
+                SelectItemInternal(item, !item.IsSelected, false);
                 if (_selectionMenuDelegate.AllowMultipleSelection)
+                {
+                    NotifySelectedItem((T) item.Item, item.IsSelected, true);
                     return;
+                }
+
                 var currentSelected =
                     _filterList.FirstOrDefault(
                         i => !_equalityComparerInternal.Equals(item.Item, i.Item) && i.IsSelected);
                 if (currentSelected == null)
                     return;
-                NotifySelectedItem(currentSelected, false);
+                NotifySelectedItem(currentSelected, false, true);
+                NotifySelectedItem((T) item.Item, item.IsSelected, true);
             }
 
-            private void NotifySelectedItem(T item, bool isSelected)
+            private void NotifySelectedItem(T item, bool isSelected, bool notify)
             {
                 _selectedItem.Remove(item);
                 if (isSelected)
                 {
                     _selectedItem.Add(item);
-                    _selectionMenuDelegate.OnItemSelected(item);
+                    if (notify)
+                        _selectionMenuDelegate.OnItemSelected(item);
                 }
                 else
                 {
-                    _selectionMenuDelegate.OnItemUnselected(item);
+                    if (notify)
+                        _selectionMenuDelegate.OnItemUnselected(item);
                 }
             }
 
-            private void SelectItemInternal(T item, bool isSelected)
+            private void SelectItemInternal(T item, bool isSelected, bool notify = true)
             {
                 var wrapper = _selectionMenuItems.FirstOrDefault(i => _equalityComparerInternal.Equals(i.Item, item));
                 if (wrapper == null)
                     return;
-                SelectItemInternal(wrapper, isSelected);
+                SelectItemInternal(wrapper, isSelected, notify);
             }
 
-            private void SelectItemInternal(SelectionMenuItem item, bool isSelected)
+            private void SelectItemInternal(SelectionMenuItem item, bool isSelected, bool notify = true)
             {
                 switch (isSelected)
                 {
@@ -166,14 +173,14 @@ namespace SelectionMenu.iOS
                         return;
                 }
 
-                NotifySelectedItem(item, isSelected);
+                NotifySelectedItem(item, isSelected, notify);
             }
 
-            private void NotifySelectedItem(SelectionMenuItem selectionMenuItem, bool isSelected)
+            private void NotifySelectedItem(SelectionMenuItem selectionMenuItem, bool isSelected, bool notify)
             {
                 selectionMenuItem.IsSelected = isSelected;
                 _menuAdapterDelegate.NotifySelectedItem(selectionMenuItem);
-                NotifySelectedItem((T) selectionMenuItem.Item, isSelected);
+                NotifySelectedItem((T) selectionMenuItem.Item, isSelected, notify);
             }
 
             private void SyncWithMenuItems(IEnumerable<T> items)

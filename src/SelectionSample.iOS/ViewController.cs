@@ -1,6 +1,7 @@
 ﻿using Foundation;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using UIKit;
 
 namespace SelectionSample
@@ -29,7 +30,10 @@ namespace SelectionSample
                     new SampleItem("Kathy Dennis")
                 };
 
-                var result = await SelectionViewController.GetSelectedItemsAsync(this, items, Switch.On);
+                var selectedItems = items.Take(Switch.On ? 2 : 1).ToArray();
+                
+                var result = await SelectionViewController2.GetSelectedItemsAsync(this, items, selectedItems,
+                    "Test", Switch.On, true);
 
                 Debug.WriteLine("Selected items:");
                 foreach (var item in result)
