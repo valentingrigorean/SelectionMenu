@@ -23,7 +23,7 @@ namespace SelectionSample
 
         private bool _allowMultipleSelection;
         private bool _allowFiltering;
-        
+
 
         public bool AllowMultipleSelection => _allowMultipleSelection;
         public bool AllowFiltering => _allowFiltering;
@@ -36,6 +36,12 @@ namespace SelectionSample
 
         public bool ShouldUnselectItem(SampleItem item)
         {
+            if (item == _items[0])
+            {
+                SetResult(_dataSource.SelectedItems);
+                return false;
+            }
+
             return true;
         }
 
@@ -94,7 +100,6 @@ namespace SelectionSample
             };
             View?.AddSubview(_tableView);
             _tableView.RegisterClassForCellReuse(typeof(SelectionTableViewCell2), nameof(SelectionTableViewCell2));
-
 
 
             NSLayoutConstraint.ActivateConstraints(new[]
