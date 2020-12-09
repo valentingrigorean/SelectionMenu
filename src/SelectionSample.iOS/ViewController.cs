@@ -32,7 +32,7 @@ namespace SelectionSample
 
                 var selectedItems = items.Take(Switch.On ? 2 : 1).ToArray();
                 
-                var result = await SelectionViewController2.GetSelectedItemsAsync(this, items, selectedItems,
+                var result = await SelectionViewController2.GetSelectedItemsAsync(this, items, null,
                     "Test", Switch.On, true);
 
                 Debug.WriteLine("Selected items:");

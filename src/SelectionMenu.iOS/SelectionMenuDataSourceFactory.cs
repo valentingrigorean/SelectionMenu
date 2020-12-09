@@ -135,7 +135,11 @@ namespace SelectionMenu.iOS
                     _filterList.FirstOrDefault(
                         i => !_equalityComparerInternal.Equals(item.Item, i.Item) && i.IsSelected);
                 if (currentSelected == null)
+                {
+                    NotifySelectedItem((T) item.Item, item.IsSelected, true);
                     return;
+                }
+
                 NotifySelectedItem(currentSelected, false, true);
                 NotifySelectedItem((T) item.Item, item.IsSelected, true);
             }
